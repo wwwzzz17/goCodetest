@@ -77,7 +77,9 @@ func SetRoutes(app *gin.Engine) {
 	app.Use(replaceCtxWithTraceID())
 
 	app.GET("/health", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"status": "ok"})
+		respondWithSuccess(c, "success", map[string]interface{}{
+			"status": "healthy",
+		})
 	})
 
 	app.POST("/products", addProduct)
