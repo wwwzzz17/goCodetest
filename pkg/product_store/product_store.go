@@ -107,7 +107,7 @@ func (ps *ProductStore) productFilter(product *Product, ids []int64, name string
 	return true
 }
 
-func (ps *ProductStore) GetProductsList(ctx context.Context, page int, pageSize int, ids []int64, name string, priceRange [2]float64, quantityRange [2]int64) []*Product {
+func (ps *ProductStore) GetProductsList(ctx context.Context, page int, pageSize int, ids []int64, name string, priceRange [2]float64, quantityRange [2]int64) ([]*Product, int) {
 	ps.mu.Lock()
 	defer ps.mu.Unlock()
 
@@ -130,11 +130,11 @@ func (ps *ProductStore) GetProductsList(ctx context.Context, page int, pageSize 
 	start := (page - 1) * pageSize
 	end := start + pageSize
 	if start >= len(filteredProducts) {
-		return nil
+		return nil, 0
 	}
 	if end > len(filteredProducts) {
 		end = len(filteredProducts)
 	}
 	logger.Info("TraceId: %s - Retrieved %d products for page %d with page size %d", ctx.Value(models.TraceIDKey), len(filteredProducts), page, pageSize)
-	return filteredProducts[start:end]
+	return filteredProducts[start:end], len(filteredProducts)
 }

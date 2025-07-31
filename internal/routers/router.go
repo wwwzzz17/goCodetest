@@ -6,6 +6,7 @@ import (
 	"goCodetest/internal/models"
 	"goCodetest/pkg/logger"
 	"goCodetest/pkg/product_store"
+	"math"
 	"net/http"
 	"strconv"
 
@@ -237,7 +238,14 @@ func getProductsList(c *gin.Context) {
 		query.Limit = 10
 	}
 
-	products := pStore.GetProductsList(ctx, query.Page, query.Limit, query.IDs, query.Name, [2]float64{query.PriceMin, query.PriceMax}, [2]int64{query.QuantityMin, query.QuantityMax})
+	if query.PriceMax == 0 {
+		query.PriceMax = math.MaxFloat64
+	}
+	if query.QuantityMax == 0 {
+		query.QuantityMax = math.MaxInt64
+	}
+
+	products, total := pStore.GetProductsList(ctx, query.Page, query.Limit, query.IDs, query.Name, [2]float64{query.PriceMin, query.PriceMax}, [2]int64{query.QuantityMin, query.QuantityMax})
 	if len(products) == 0 {
 		logger.Info("getProductsList: no products found")
 		respondWithSuccess(c, "No products found", map[string]interface{}{
@@ -249,6 +257,6 @@ func getProductsList(c *gin.Context) {
 
 	respondWithSuccess(c, "Products retrieved successfully", map[string]interface{}{
 		"results": products,
-		"total":   len(products),
+		"total":   total,
 	})
 }

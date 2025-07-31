@@ -58,6 +58,10 @@ echo "Quantity range search (quantity > 50):"
 curl -s "$BASE_URL/products?quantity_min=50"
 echo -e "\n"
 
+echo "Ids search (ID = 2,3,4):"
+curl -s "$BASE_URL/products?ids[]=2&ids[]=3&ids[]=4"
+echo -e "\n"
+
 # 3. Update product
 echo -e "${YELLOW}=== Updating Product ===${NC}"
 
@@ -69,6 +73,10 @@ echo -e "\n"
 
 # 4. Delete product
 echo -e "${YELLOW}=== Deleting Product ===${NC}"
+
+echo "Deleting product ID=3:"
+curl -s -X DELETE "$BASE_URL/products/3"
+echo -e "\n"
 
 echo "Deleting product ID=4:"
 curl -s -X DELETE "$BASE_URL/products/4"
