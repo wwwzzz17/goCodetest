@@ -94,6 +94,7 @@ The test script will:
 ## Rate limiter
 ```bash
 ./internal/services/rate_limiter.go
+```
 
 ## Answers
 ```bash
