@@ -26,7 +26,7 @@ For observability, I follow the OpenTelemetry standards to ensure comprehensive 
 
 From the beginning of each request, I propagate and record a trace ID to enable distributed tracing across services.
 
-I capture the full request lifecycle and record detailed traces, which are then sent to a centralized tracing system like Jaeger or Tempo.
+I capture the full request lifecycle and record detailed traces, which are then sent to a centralized tracing system.
 
 Logs are structured and include trace IDs for correlation, and are forwarded to a log aggregation platform.
 
@@ -34,7 +34,7 @@ Metrics on request rates, latencies, error rates, and resource usage are collect
 
 This observability strategy provides a solid data foundation for troubleshooting and performance analysis.
 # Go API framework of choice (e.g., Gin, Chi) and why
-My preferred Go API framework is Gin, mainly because of its strong community support, rich feature set, and ease of use. It helps developers focus more on business logic rather than the first step.
+My preferred Go API framework is Gin, mainly because of its strong community support, rich feature set, and ease of use. It helps developers focus more on business logic rather than framework setup.
 
 Gin provides built-in middleware, good routing capabilities, and better support for parameter binding and validation, which makes it a good fit for business-oriented services or public-facing APIs.
 
